@@ -13,19 +13,19 @@ class TestJsonPlaceholderSite:
         assert len(response) == 20
 
     def test_openbrewerydb_2(self, brewery_type):
-        """ Проверка фильтрации по типу"""
+        """ Проверка фильтрации по brewery_type"""
         response = requests.get('https://api.openbrewerydb.org/breweries?by_type=' + brewery_type)
         assert response.status_code == 200
         assert response.json()[0]["brewery_type"] == brewery_type
 
     def test_openbrewerydb_3(self, brewery_name):
-        """ Проверка, фильтрации пивоварен по имени """
+        """ Проверка, фильтрации пивоварен по name """
         response = requests.get("https://api.openbrewerydb.org/breweries?by_name=" + brewery_name)
         assert response.status_code == 200
         assert brewery_name in response.json()[0]["name"]
 
     def test_openbrewerydb_4(self, brewery_id):
-        """ Проверяем, что можно получить инфо о любой пивоварне по name.
+        """ Проверяем, что можно получить инфо о любой пивоварне по id.
             Тест через фикстуру."""
         response = BrewerySiteMethods.request_brewery_information(brewery_id)
         assert response.status_code == 200

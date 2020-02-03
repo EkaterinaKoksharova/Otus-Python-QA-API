@@ -5,12 +5,12 @@ from openbrewerydb.methods import BrewerySiteMethods
 
 @pytest.fixture(params=['Dog', 'Beer', 'House', 'Mom', 'England'])
 def brewery_name(request):
-    """ Фикстура возвращает список name постов """
+    """ Фикстура возвращает список name пивоварен """
     return request.param
 
 @pytest.fixture(params=BrewerySiteMethods.get_all_breweries_id())
 def brewery_id(request):
-    """ Фикстура возвращает список id постов на 1 странице """
+    """ Фикстура возвращает список id пивоварен на 1 странице """
     return request.param
 
 @pytest.fixture(params=['micro', 'regional', 'brewpub',
