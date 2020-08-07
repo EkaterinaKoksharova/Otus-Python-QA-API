@@ -12,7 +12,7 @@ def mock_response():
 
     return requests.get("https://ya.ru/")
 
-@pytest.fixture:
+@pytest.fixture
 def mock():
 
     with requests_mock.Mocker() as mock_instance:
