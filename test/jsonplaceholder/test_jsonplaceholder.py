@@ -1,8 +1,13 @@
 """ Тесты api сайта https://jsonplaceholder.typicode.com/ """
 
+import unittest
+from unittest.mock import Mock, patch
+from test.jsonplaceholder.methods import JsonSiteMethods
+from test.jsonplaceholder.mock import get_photos, mock_data_json
 import pytest
 import requests
-from jsonplaceholder.methods import JsonSiteMethods
+from nose.tools import assert_list_equal, assert_not_in
+
 
 class TestJsonPlaceholderSite:
     """ Тесты api сайта https://jsonplaceholder.typicode.com/ """
@@ -67,3 +72,32 @@ class TestJsonPlaceholderSite:
                                 headers=JsonSiteMethods.headers_data())
         assert response.status_code == 200
         assert response.json() == data
+
+
+class UnittestJsonSite(unittest.TestCase):
+    """ Тесты MOCK api сайта https://jsonplaceholder.typicode.com/ """
+
+    def test_get_photo_if_server_is_ok(self):
+        """ Проверка, что сервер не вернет ошибку, если в альбоме НЕТ фото """
+
+        mock_data = mock_data_json()
+
+        with patch('mock.requests.get') as mock_get:
+            mock_get.return_value = Mock(ok=True)
+            mock_get.return_value.json.return_value = mock_data
+            response = get_photos()
+
+            assert_list_equal(response.json(), mock_data)
+
+    def test_get_photos_if_server_is_not_ok(self):
+        """ Проверка, что сервер не вернет фото, когда НЕ доступен """
+
+        with patch('mock.requests.get') as mock_get:
+            mock_get.return_value.ok = False
+            response = get_photos()
+
+            assert_not_in("albumId", response)
+
+
+if __name__ == '__main__':
+    unittest.main()
