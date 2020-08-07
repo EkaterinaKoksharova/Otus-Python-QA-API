@@ -1,7 +1,7 @@
 """ Фикстуры для автотестов сайта https://dog.ceo/api/breed/ """
 
 import pytest
-from dog.methods import DogSiteMethods
+from test.dog.methods import DogSiteMethods
 
 @pytest.fixture(params=DogSiteMethods.get_all_breeds())
 def breed_list(request):

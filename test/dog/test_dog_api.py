@@ -2,7 +2,8 @@
 
 import pytest
 import requests
-from dog.methods import DogSiteMethods
+from test.dog.methods import DogSiteMethods
+
 
 class TestDogSite:
     """ Тесты api сайта https://dog.ceo/"""
